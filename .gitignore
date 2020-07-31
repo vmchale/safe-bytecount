@@ -1,0 +1,9 @@
+*.ibc
+.shake
+rusty-tags.vi
+*.swp
+tags
+.atspkg
+target
+*_dats.c
+*_sats.c

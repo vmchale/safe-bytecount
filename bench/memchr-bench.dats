@@ -1,0 +1,29 @@
+staload "libats/libc/SATS/stdio.sats"
+
+#include "$PATSHOMELOCS/ats-bench-0.3.3/bench.dats"
+#include "share/atspre_staload.hats"
+#include "DATS/wc.dats"
+#include "DATS/pointer.dats"
+
+extern
+castfn fp_is_null { l : addr | l == null }{m:fm} (FILEptr(l,m)) :<> void
+
+fn harness_naive() : void =
+  let
+    var inp = fopen("bench/data/sqlite3.c", file_mode_r)
+    val () = if FILEptr_is_null(inp) then
+      let
+        val () = fp_is_null(inp)
+        val () = println!("failed to open file")
+      in end
+    else
+      let
+        var newlines = count_file_for_loop(inp)
+        val () = fclose_silent(inp)
+      in end
+  in end
+
+val harness_naive_delay: io = lam () => harness_naive()
+
+implement main0 () =
+  print_slope("sqlite.c (for loop)", 9, harness_naive_delay)
