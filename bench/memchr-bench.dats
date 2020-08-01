@@ -2,6 +2,7 @@ staload "libats/libc/SATS/stdio.sats"
 
 #include "$PATSHOMELOCS/ats-bench-0.3.3/bench.dats"
 #include "share/atspre_staload.hats"
+#include "share/HATS/atslib_staload_libats_libc.hats"
 #include "DATS/wc.dats"
 #include "DATS/pointer.dats"
 
@@ -18,7 +19,7 @@ fn harness_naive() : void =
       in end
     else
       let
-        var newlines = count_file_for_loop(file_mode_lte_r_r | inp)
+        var newlines = count_lines_file(file_mode_lte_r_r | inp)
         val () = fclose_silent(inp)
       in end
   in end

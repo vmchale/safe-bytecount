@@ -8,8 +8,8 @@ staload "SATS/size.sats"
 
 #define BUFSZ 32768
 
-fn count_lines_for_loop { l : addr | l != null }{m:nat}{ n : nat | n <= m }(pf : !bytes_v(l, m)
-                                                                           | ptr : ptr(l), bufsz : size_t(n)) : int =
+fn safe_memchr { l : addr | l != null }{m:nat}{ n : nat | n <= m }(pf : !bytes_v(l, m)
+                                                                  | ptr : ptr(l), c : char, bufsz : size_t(n)) : int =
   let
     var res: int = 0
     var i: size_t
@@ -18,19 +18,21 @@ fn count_lines_for_loop { l : addr | l != null }{m:nat}{ n : nat | n <= m }(pf :
         let
           var current_char = byteview_read_as_char(pf | add_ptr_bsz(ptr, i))
         in
-          case+ current_char of
-            | '\n' => res := res + 1
-            | _ => ()
+          if current_char = c then
+            res := res + 1
+          else
+            ()
         end
     var current_char = byteview_read_as_char(pf | ptr)
-    val () = case+ current_char of
-      | '\n' => res := res + 1
-      | _ => ()
+    val () = if current_char = c then
+      res := res + 1
+    else
+      ()
   in
     res
   end
 
-fn count_file_for_loop {m:fm}(pfr : fmlte(m, r) | inp : !FILEptr1(m)) : int =
+fn count_lines_file {m:fm}(pfr : fmlte(m, r) | inp : !FILEptr1(m)) : int =
   let
     val (pfat, pfgc | p) = malloc_gc(g1i2u(BUFSZ))
     prval () = pfat := b0ytes2bytes_v(pfat)
@@ -48,7 +50,7 @@ fn count_file_for_loop {m:fm}(pfr : fmlte(m, r) | inp : !FILEptr1(m)) : int =
           let
             var fb_prf = bounded(file_bytes)
             prval () = lt_bufsz(fb_prf)
-            var acc = count_lines_for_loop(pf | p, fb_prf)
+            var acc = safe_memchr(pf | p, '\n', fb_prf)
           in
             acc + loop(pf | inp, p)
           end
