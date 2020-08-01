@@ -6,10 +6,6 @@ authors = ["Vanessa McHale <vamchale@gmail.com>"]
 [dev-dependencies]
 criterion = "0.3"
 
-[dependencies]
-libc = "0.2"
-memchr = "2.2"
-
 [dependencies.bytecount]
 features = ["runtime-dispatch-simd"]
 version = "0.6"

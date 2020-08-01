@@ -1,7 +1,7 @@
-# safe-memchr
+# safe-bytecount
 
-A safe version of `memchr` that gets optimized beyond
-[memchr](https://crates.io/crates/memchr) by GCC and clang.
+A safe version of `bytecount` that gets optimized beyond
+[bytecount](https://docs.rs/bytecount) by GCC and clang.
 
 ## Results
 
