@@ -4,7 +4,7 @@ staload UN = "prelude/SATS/unsafe.sats"
 staload "SATS/pointer.sats"
 staload "SATS/size.sats"
 
-#include "DATS/memchr.dats"
+#include "DATS/bytecount.dats"
 #include "DATS/io.dats"
 
 fn count_lines_file {m:fm}(pfr : fmlte(m, r) | inp : !FILEptr1(m)) : int =
@@ -25,7 +25,7 @@ fn count_lines_file {m:fm}(pfr : fmlte(m, r) | inp : !FILEptr1(m)) : int =
           let
             var fb_prf = bounded(file_bytes)
             prval () = lt_bufsz(fb_prf)
-            var acc = safe_memchr(pf | p, '\n', fb_prf)
+            var acc = safe_bytecount(pf | p, '\n', fb_prf)
           in
             acc + loop(pf | inp, p)
           end

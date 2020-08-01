@@ -2,8 +2,9 @@ staload "SATS/pointer.sats"
 
 #define BUFSZ 32768
 
-fn safe_memchr { l : addr | l != null }{m:nat}{ n : nat | n <= m }(pf : !bytes_v(l, m)
-                                                                  | ptr : ptr(l), c : char, bufsz : size_t(n)) : int =
+fn safe_bytecount { l : addr | l != null }{m:nat}{ n : nat | n <= m }(pf : !bytes_v(l, m)
+                                                                     | ptr : ptr(l), c : char, bufsz : size_t(n)) :
+  int =
   let
     var res: int = 0
     var i: size_t
