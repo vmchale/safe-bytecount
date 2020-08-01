@@ -1,8 +1,7 @@
 staload UN = "prelude/SATS/unsafe.sats"
 
-// TODO: migrate to use fread1
-fn freadc { l : addr | l != null }{ sz : nat | sz >= 1 }(pf : !bytes_v(l, sz)
-                                                        | inp : !FILEptr1, bufsize : size_t(sz), p : ptr(l)) :
+fn fread_v { l : addr | l != null }{ sz : nat | sz >= 1 }(pf : !bytes_v(l, sz)
+                                                         | inp : !FILEptr1, bufsize : size_t(sz), p : ptr(l)) :
   [ m : nat | m <= sz ] size_t(m) =
   let
     extern

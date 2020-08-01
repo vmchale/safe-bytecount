@@ -30,14 +30,14 @@ fn count_lines_for_loop { l : addr | l != null }{m:nat}{ n : nat | n <= m }(pf :
     res
   end
 
-fn count_file_for_loop(inp : !FILEptr1) : int =
+fn count_file_for_loop {m:fm}(pfr : fmlte(m, r) | inp : !FILEptr1(m)) : int =
   let
     val (pfat, pfgc | p) = malloc_gc(g1i2u(BUFSZ))
     prval () = pfat := b0ytes2bytes_v(pfat)
     
     fun loop { l : addr | l != null }(pf : !bytes_v(l, BUFSZ) | inp : !FILEptr1, p : ptr(l)) : int =
       let
-        var file_bytes = freadc(pf | inp, i2sz(BUFSZ), p)
+        var file_bytes = fread_v(pf | inp, i2sz(BUFSZ), p)
         
         extern
         praxi lt_bufsz {m:nat} (size_t(m)) : [m <= BUFSZ] void

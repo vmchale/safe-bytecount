@@ -1,5 +1,5 @@
 [package]
-name = "bytecount_ffi"
+name = "bytecount_bench"
 version = "0.1.0"
 authors = ["Vanessa McHale <vamchale@gmail.com>"]
 

@@ -18,7 +18,7 @@ fn harness_naive() : void =
       in end
     else
       let
-        var newlines = count_file_for_loop(inp)
+        var newlines = count_file_for_loop(file_mode_lte_r_r | inp)
         val () = fclose_silent(inp)
       in end
   in end
