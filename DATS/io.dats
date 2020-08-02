@@ -3,7 +3,7 @@ staload UN = "prelude/SATS/unsafe.sats"
 
 fn fread_v { l : addr | l != null }{ sz : nat | sz >= 1 }{f:fm}(pfr : fmlte(f, r), pf : !bytes_v(l, sz)
                                                                | inp : !FILEptr1(f), bufsize : size_t(sz), p : ptr(l)) :
-  [ m : nat | m <= sz ] size_t(m) =
+  sizeLte(sz) =
   let
     extern
     castfn as_fileref(x : !FILEptr1) :<> FILEref

@@ -9,7 +9,7 @@ staload "SATS/size.sats"
 
 #define BUFSZ 32768
 
-fn count_lines_file {f:fm}(pfr : fmlte(f, r) | inp : !FILEptr1(f)) : int =
+fn count_lines_file {m:fm}(pfr : fmlte(m, r) | inp : !FILEptr1(m)) : int =
   let
     val (pfat, pfgc | p) = malloc_gc(g1i2u(BUFSZ))
     prval () = pfat := b0ytes2bytes_v(pfat)
