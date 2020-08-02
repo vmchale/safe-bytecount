@@ -7,6 +7,8 @@ staload "SATS/size.sats"
 #include "DATS/bytecount.dats"
 #include "DATS/io.dats"
 
+#define BUFSZ 32768
+
 fn count_lines_file {m:fm}(pfr : fmlte(m, r) | inp : !FILEptr1(m)) : int =
   let
     val (pfat, pfgc | p) = malloc_gc(g1i2u(BUFSZ))

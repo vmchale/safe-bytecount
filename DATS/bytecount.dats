@@ -1,7 +1,5 @@
 staload "SATS/pointer.sats"
 
-#define BUFSZ 32768
-
 fn safe_bytecount { l : addr | l != null }{m:nat}{ n : nat | n <= m }(pf : !bytes_v(l, m)
                                                                      | ptr : ptr(l), c : char, bufsz : size_t(n)) :
   int =
