@@ -9,14 +9,15 @@ staload "SATS/size.sats"
 
 #define BUFSZ 32768
 
-fn count_lines_file {m:fm}(pfr : fmlte(m, r) | inp : !FILEptr1(m)) : int =
+fn count_lines_file {f:fm}(pfr : fmlte(f, r) | inp : !FILEptr1(f)) : int =
   let
     val (pfat, pfgc | p) = malloc_gc(g1i2u(BUFSZ))
     prval () = pfat := b0ytes2bytes_v(pfat)
     
-    fun loop { l : addr | l != null }(pf : !bytes_v(l, BUFSZ) | inp : !FILEptr1, p : ptr(l)) : int =
+    fun loop { l : addr | l != null }{f:fm}(pfr : fmlte(f, r), pf : !bytes_v(l, BUFSZ)
+                                           | inp : !FILEptr1(f), p : ptr(l)) : int =
       let
-        var file_bytes = fread_v(pf | inp, i2sz(BUFSZ), p)
+        var file_bytes = fread_v(pfr, pf | inp, i2sz(BUFSZ), p)
         
         extern
         praxi lt_bufsz {m:nat} (size_t(m)) : [m <= BUFSZ] void
@@ -29,11 +30,11 @@ fn count_lines_file {m:fm}(pfr : fmlte(m, r) | inp : !FILEptr1(m)) : int =
             prval () = lt_bufsz(fb_prf)
             var acc = safe_bytecount(pf | p, '\n', fb_prf)
           in
-            acc + loop(pf | inp, p)
+            acc + loop(pfr, pf | inp, p)
           end
       end
     
-    var ret = loop(pfat | inp, p)
+    var ret = loop(pfr, pfat | inp, p)
     val () = mfree_gc(pfat, pfgc | p)
   in
     ret
