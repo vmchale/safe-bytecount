@@ -9,9 +9,9 @@ staload "libats/libc/SATS/stdio.sats"
 extern
 castfn fp_is_null { l : addr | l == null }{m:fm} (FILEptr(l,m)) :<> void
 
-fn harness_naive() : void =
+fn harness_naive(fp : string) : void =
   let
-    var inp = fopen("bench/data/sqlite3.c", file_mode_r)
+    var inp = fopen(fp, file_mode_r)
     val () = if FILEptr_is_null(inp) then
       let
         val () = fp_is_null(inp)
@@ -24,7 +24,8 @@ fn harness_naive() : void =
       in end
   in end
 
-val harness_naive_delay: io = lam () => harness_naive()
+val harness_naive_delay: io = lam () =>
+    harness_naive("bench/data/sqlite3.c")
 
 implement main0 () =
   print_slope("sqlite.c (for loop)", 9, harness_naive_delay)
