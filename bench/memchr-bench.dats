@@ -28,4 +28,4 @@ val harness_naive_delay: io = lam () =>
     harness_naive("bench/data/sqlite3.c")
 
 implement main0 () =
-  print_slope("sqlite.c (for loop)", 9, harness_naive_delay)
+  print_slope("sqlite.c (for loop)", 8, harness_naive_delay)
