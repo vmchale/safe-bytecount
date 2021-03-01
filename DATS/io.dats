@@ -8,9 +8,9 @@ fn fread_v { l : addr | l != null }{ sz : nat | sz >= 1 }{m:fm}(pfr : fmlte(m, r
     extern
     castfn as_fileref(x : !FILEptr1) :<> FILEref
     
-    var n = $extfcall(size_t, "fread", p, sizeof<byte>, bufsize, as_fileref(inp))
+    var n = $extfcall(sizeLte(sz), "fread", p, sizeof<byte>, bufsize, as_fileref(inp))
   in
-    $UN.cast(n)
+    n
   end
 
 extern
